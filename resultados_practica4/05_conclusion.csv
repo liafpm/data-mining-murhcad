@@ -1,0 +1,2 @@
+﻿alpha,F_anova,p_anova,conclusion
+0.05,6587.787868079598,0.0,"El ANOVA de una vía mostró una diferencia estadísticamente significativa en srcPort entre los tipos de ataque (F = 6587.79, p < 0.001). Por lo tanto, se rechaza la hipótesis nula de igualdad de medias. Las pruebas t de Welch con corrección de Bonferroni permiten identificar qué pares de grupos presentan diferencias estadísticamente significativas."

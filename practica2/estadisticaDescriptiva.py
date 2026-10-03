@@ -261,9 +261,11 @@ plt.show()
 # 10. GUARDAR LAS MÉTRICAS EN UN CSV
 # ============================================================
 
-metricas.to_csv("metricas_ataques.csv")
+output_dir = Path(__file__).resolve().parent.parent / "resultados_practica2"
+output_dir.mkdir(parents=True, exist_ok=True)
+metricas.to_csv(output_dir / "metricas_ataques.csv")
 
-print("\nArchivo 'metricas_ataques.csv' creado correctamente.")
+print(f"\nArchivo '{output_dir / 'metricas_ataques.csv'}' creado correctamente.")
 
 
 # ============================================================

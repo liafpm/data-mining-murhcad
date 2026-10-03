@@ -1,0 +1,4 @@
+﻿grupo_1,grupo_2,t,p_valor_original,p_valor_bonferroni,alpha,significativo
+Cowrie,Dionaea,39.61538483025614,0.0,0.0,0.05,Sí
+Cowrie,Sentrypeer,-86.84812144768077,0.0,0.0,0.05,Sí
+Dionaea,Sentrypeer,-94.04487762635414,0.0,0.0,0.05,Sí

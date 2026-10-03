@@ -1,0 +1,43 @@
+======================================================================
+REPORTE - SEMANA 7: PRUEBAS ESTADÍSTICAS
+======================================================================
+
+Dataset: HoneyNetEvents_Clean.csv
+Registros originales: 132,425
+Registros analizados: 132,425
+Nivel de significancia: α = 0.05
+
+----------------------------------------------------------------------
+OBJETIVO
+----------------------------------------------------------------------
+Comprobar si existen diferencias estadísticamente significativas en srcPort entre los diferentes valores de attackType.
+
+----------------------------------------------------------------------
+HIPÓTESIS
+----------------------------------------------------------------------
+H0: Las medias de srcPort son iguales entre los tipos de ataque.
+H1: Al menos una media de srcPort es diferente.
+
+----------------------------------------------------------------------
+ANOVA DE UNA VÍA
+----------------------------------------------------------------------
+F = 6587.787868
+p = 0
+Decisión: Rechazar H0
+
+El ANOVA de una vía mostró una diferencia estadísticamente significativa en srcPort entre los tipos de ataque (F = 6587.79, p < 0.001). Por lo tanto, se rechaza la hipótesis nula de igualdad de medias. Las pruebas t de Welch con corrección de Bonferroni permiten identificar qué pares de grupos presentan diferencias estadísticamente significativas.
+
+----------------------------------------------------------------------
+PRUEBAS T DE WELCH + BONFERRONI
+----------------------------------------------------------------------
+Cowrie vs Dionaea: t = 39.615385, p original = 0, p Bonferroni = 0, significativo = Sí
+Cowrie vs Sentrypeer: t = -86.848121, p original = 0, p Bonferroni = 0, significativo = Sí
+Dionaea vs Sentrypeer: t = -94.044878, p original = 0, p Bonferroni = 0, significativo = Sí
+
+----------------------------------------------------------------------
+RESUMEN DESCRIPTIVO
+----------------------------------------------------------------------
+attackType  cantidad        media  mediana  desviacion_estandar  minimo  maximo
+    Cowrie     28869 46814.507673  47056.0          8794.442807       0   65522
+   Dionaea     42179 42297.155765  51311.0         20867.401256       1   65535
+Sentrypeer     61377 52701.712026  54845.0         10844.418189       0   65534
