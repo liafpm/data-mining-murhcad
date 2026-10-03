@@ -1,0 +1,31 @@
+======================================================================
+REPORTE - SEMANA 9: MODELOS LINEALES Y CORRELACIÓN
+======================================================================
+
+Dataset: HoneyNetEvents_Clean.csv
+Registros originales: 132,425
+Registros analizados: 132,425
+
+----------------------------------------------------------------------
+OBJETIVO
+----------------------------------------------------------------------
+Generar un modelo lineal entre srcLon y srcPort, crear las gráficas correspondientes y obtener R^2.
+
+----------------------------------------------------------------------
+MODELO
+----------------------------------------------------------------------
+Variable independiente: srcLon
+Variable dependiente: srcPort
+Ecuación: srcPort = 48901.890900 + (-45.397238 * srcLon)
+
+----------------------------------------------------------------------
+RESULTADOS
+----------------------------------------------------------------------
+Correlación de Pearson (r): -0.257065
+R^2: 0.066082
+p-valor: 0
+
+----------------------------------------------------------------------
+CONCLUSIÓN
+----------------------------------------------------------------------
+La correlación entre srcLon y srcPort es negativa y débil (r = -0.2571). El modelo lineal obtiene un R^2 de 0.0661, por lo que aproximadamente el 6.61% de la variabilidad de srcPort es explicada por srcLon mediante este modelo.

@@ -12,7 +12,7 @@ CARPETA_BASE = os.path.dirname(os.path.abspath(__file__))
 
 
 # Prácticas actualmente disponibles
-PRACTICAS_DISPONIBLES = [2, 3, 4]
+PRACTICAS_DISPONIBLES = [2, 3, 4, 5]
 
 # ============================================================
 # FUNCIONES
@@ -164,12 +164,7 @@ def mostrar_menu():
     print("  2. Estadistica Descriptiva")
     print("  3. Visualizacion de Datos")
     print("  4. Pruebas Estadisticas")
-
-    # ========================================================
-    # PRÓXIMAS PRÁCTICAS
-    # ========================================================
-
-    # print("  5. Modelos Lineales y Correlacion")
+    print("  5. Modelos Lineales y Correlacion")
     # print("  6. Clasificacion de Datos")
     # print("  7. Agrupamiento de Datos (Clustering)")
     # print("  8. Pronostico (Forecasting)")

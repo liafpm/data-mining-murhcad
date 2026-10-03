@@ -1,0 +1,2 @@
+﻿correlacion,R2,conclusion
+-0.257065164389463,0.06608249874258162,"La correlación entre srcLon y srcPort es negativa y débil (r = -0.2571). El modelo lineal obtiene un R^2 de 0.0661, por lo que aproximadamente el 6.61% de la variabilidad de srcPort es explicada por srcLon mediante este modelo."
