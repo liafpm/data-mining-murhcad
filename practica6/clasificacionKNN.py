@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 CSV_PATH = BASE_DIR / "practica1" / "HoneyNetEvents_Clean.csv"
 
 # Carpeta donde se guardarán todos los resultados
-OUTPUT_DIR = BASE_DIR / "resultados_practica6"
+OUTPUT_DIR = BASE_DIR / "resultados" / "resultados_practica6"
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 

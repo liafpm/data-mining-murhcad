@@ -1,4 +1,3 @@
-
 import os
 import subprocess
 import sys
@@ -114,15 +113,17 @@ def ejecutar_todas():
     """
     Ejecuta todas las prácticas disponibles en orden.
 
-    Si una práctica falla, se detiene la ejecución para
-    evitar continuar con resultados posiblemente incorrectos.
+    Pausa pidiendo Enter al finalizar cada práctica para avanzar
+    a la siguiente. Si una falla, se detiene la ejecución.
     """
 
     print("\n" + "#" * 65)
     print("              EJECUTANDO TODAS LAS PRACTICAS")
     print("#" * 65)
 
-    for numero_practica in PRACTICAS_DISPONIBLES:
+    total_practicas = len(PRACTICAS_DISPONIBLES)
+
+    for idx, numero_practica in enumerate(PRACTICAS_DISPONIBLES, start=1):
 
         print(
             f"\n>>> Iniciando practica "
@@ -142,6 +143,10 @@ def ejecutar_todas():
             )
             print("!" * 65)
             return
+
+        # Si aún faltan prácticas por ejecutar, pausar con Enter
+        if idx < total_practicas:
+            input("\n[Presiona Enter para continuar con la siguiente práctica...]")
 
     print("\n" + "#" * 65)
     print("       ✓ TODAS LAS PRACTICAS TERMINARON")
@@ -202,6 +207,7 @@ def main():
 
         elif opcion == "a":
             ejecutar_todas()
+            input("\n[Presiona Enter para volver al menú principal...]")
 
         # ----------------------------------------------------
         # EJECUTAR UNA PRACTICA
@@ -213,11 +219,14 @@ def main():
 
             if numero_practica in PRACTICAS_DISPONIBLES:
                 ejecutar_practica(numero_practica)
+                input("\n[Presiona Enter para volver al menú principal...]")
             else:
                 print("\n[!] Practica no disponible.")
+                input("\n[Presiona Enter para volver al menú principal...]")
 
         else:
             print("\n[!] Opcion no valida.")
+            input("\n[Presiona Enter para volver al menú principal...]")
 
 
 # ============================================================

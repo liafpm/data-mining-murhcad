@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 CSV_PATH = BASE_DIR / "practica1" / "HoneyNetEvents_Clean.csv"
 
 # Carpeta de salida para practica 9 / semana 14
-OUTPUT_DIR = BASE_DIR / "resultados_practica9"
+OUTPUT_DIR = BASE_DIR / "resultados" / "resultados_practica9"
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 
@@ -117,7 +117,14 @@ plt.close()
 # GRÁFICA 2: Barplot Top 10 Organizaciones Atacantes
 plt.figure(figsize=(10, 6))
 top_orgs = frecuencia_org.head(10)
-sns.barplot(data=top_orgs, y="Organizacion_ISP", x="Frecuencia", palette="viridis")
+sns.barplot(
+    data=top_orgs,
+    y="Organizacion_ISP",
+    x="Frecuencia",
+    hue="Organizacion_ISP",
+    palette="viridis",
+    legend=False
+)
 plt.title("Top 10 Organizaciones / ISPs de Origen de los Ataques", fontsize=13)
 plt.xlabel("Cantidad de Eventos", fontsize=11)
 plt.ylabel("Organización / ISP", fontsize=11)
@@ -134,7 +141,15 @@ plt.close()
 # GRÁFICA 3: Barplot Top 10 Países de Origen
 plt.figure(figsize=(10, 6))
 top_paises = frecuencia_pais.head(10)
-sns.barplot(data=top_paises, y="Pais_Origen", x="Frecuencia", palette="rocket")
+# Reemplaza la línea 137 por esto:
+sns.barplot(
+    data=top_paises,
+    y="Pais_Origen",
+    x="Frecuencia",
+    hue="Pais_Origen",
+    palette="rocket",
+    legend=False
+)
 plt.title("Top 10 Países con mayor Volumen de Eventos Maliciosos", fontsize=13)
 plt.xlabel("Cantidad de Eventos", fontsize=11)
 plt.ylabel("País de Origen", fontsize=11)

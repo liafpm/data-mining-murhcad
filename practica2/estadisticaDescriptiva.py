@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 # ------------------------------------------------------------
 BASE_DIR = Path(__file__).resolve().parent.parent
 CSV_PATH = BASE_DIR / "practica1" / "HoneyNetEvents_Clean.csv"
-OUTPUT_DIR = BASE_DIR / "resultados_practica2"
+OUTPUT_DIR = BASE_DIR / "resultados" / "resultados_practica2"
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 df = pd.read_csv(CSV_PATH)
