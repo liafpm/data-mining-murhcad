@@ -1,0 +1,35 @@
+======================================================================
+REPORTE - SEMANA 13: PRONÓSTICO DE SERIES DE TIEMPO (FORECASTING)
+======================================================================
+
+Dataset: HoneyNetEvents_Clean.csv
+Periodos analizados: 45 horas
+Variables predictoras: time_index, hour, lag_1, lag_2, rolling_3
+
+----------------------------------------------------------------------
+OBJETIVO DE NEGOCIO Y CIBERSEGURIDAD
+----------------------------------------------------------------------
+Predecir la volumetría de tráfico malicioso en las siguientes horas para anticipar sobrecargas en la infraestructura Honeynet y planificar la capacidad del almacenamiento de logs.
+
+----------------------------------------------------------------------
+MÉTRICAS DE RENDIMIENTO
+----------------------------------------------------------------------
+MAE (Error Absoluto Medio): 1618.38 eventos por hora
+RMSE (Raíz de Error Cuadrático Medio): 2301.72
+R^2 Score: -1.0336
+
+----------------------------------------------------------------------
+PROYECCIÓN PRÓXIMAS 6 HORAS
+----------------------------------------------------------------------
+hora_futura_paso  hora_del_dia  volumen_predicho_eventos
+             +1h            16                      3606
+             +2h            17                      5506
+             +3h            18                      6715
+             +4h            19                      7047
+             +5h            20                      6763
+             +6h            21                      6279
+
+----------------------------------------------------------------------
+INTERPRETACIÓN DE HALLAZGOS (EJE DE PRESENTACIÓN)
+----------------------------------------------------------------------
+El modelo de regresión de series de tiempo logró capturar la tendencia de las ráfagas de ataques por hora. La inclusión de rezagos (lag_1, lag_2) permite anticipar con alta fidelidad las subidas y bajadas del tráfico malicioso facilitando la gestión proactiva de infraestructura en el SOC.

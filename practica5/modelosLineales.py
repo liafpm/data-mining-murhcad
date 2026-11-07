@@ -2,7 +2,8 @@
 Semana 9 - Modelos Lineales y Correlación
 
 Objetivo:
-Generar un modelo lineal, crear las gráficas correspondientes
+Generar un modelo lineal entre la latitud de origen (srcLat) y 
+la latitud de destino (dstLat), crear las gráficas correspondientes
 y obtener la métrica R^2.
 """
 
@@ -19,7 +20,7 @@ from scipy import stats
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-CSV_PATH = BASE_DIR / "practica1" / "raw" / "HoneyNetEvents_Clean.csv"
+CSV_PATH = BASE_DIR / "practica1" / "HoneyNetEvents_Clean.csv"
 
 # Carpeta donde se guardarán todos los resultados.
 OUTPUT_DIR = BASE_DIR / "resultados_practica5"
@@ -50,7 +51,7 @@ print(f"Columnas: {len(df.columns)}")
 # 3. VALIDAR COLUMNAS
 # ============================================================
 
-columnas_necesarias = ["srcLon", "srcPort"]
+columnas_necesarias = ["srcLat", "dstLat"]
 
 faltantes = [
     col for col in columnas_necesarias
@@ -67,22 +68,22 @@ if faltantes:
 # 4. PREPARAR DATOS
 # ============================================================
 
-datos = df[["srcLon", "srcPort"]].copy()
+datos = df[["srcLat", "dstLat"]].copy()
 
 # Convertir las variables a numéricas por seguridad.
-datos["srcLon"] = pd.to_numeric(
-    datos["srcLon"],
+datos["srcLat"] = pd.to_numeric(
+    datos["srcLat"],
     errors="coerce"
 )
 
-datos["srcPort"] = pd.to_numeric(
-    datos["srcPort"],
+datos["dstLat"] = pd.to_numeric(
+    datos["dstLat"],
     errors="coerce"
 )
 
 # Eliminar filas que no tengan alguno de los valores.
 datos = datos.dropna(
-    subset=["srcLon", "srcPort"]
+    subset=["srcLat", "dstLat"]
 )
 
 print(f"\nRegistros utilizados para el modelo: {len(datos):,}")
@@ -96,8 +97,8 @@ print("\n" + "-" * 70)
 print("MODELO LINEAL Y CORRELACIÓN")
 print("-" * 70)
 
-x = datos["srcLon"]
-y = datos["srcPort"]
+x = datos["srcLat"]
+y = datos["dstLat"]
 
 # Regresión lineal.
 modelo = stats.linregress(x, y)
@@ -110,8 +111,8 @@ p_valor = modelo.pvalue
 # R^2 se obtiene elevando al cuadrado el coeficiente de correlación.
 r2 = correlacion ** 2
 
-print("\nVariable independiente (X): srcLon")
-print("Variable dependiente (Y): srcPort")
+print("\nVariable independiente (X): srcLat")
+print("Variable dependiente (Y): dstLat")
 
 print(f"\nPendiente: {pendiente:.6f}")
 print(f"Intercepto: {intercepto:.6f}")
@@ -121,8 +122,8 @@ print(f"p-valor: {p_valor:.6g}")
 
 print(
     f"\nEcuación del modelo:"
-    f" srcPort = {intercepto:.4f} "
-    f"+ ({pendiente:.4f} * srcLon)"
+    f" dstLat = {intercepto:.4f} "
+    f"+ ({pendiente:.4f} * srcLat)"
 )
 
 
@@ -133,8 +134,8 @@ print(
 resultados = pd.DataFrame(
     [
         {
-            "variable_independiente": "srcLon",
-            "variable_dependiente": "srcPort",
+            "variable_independiente": "srcLat",
+            "variable_dependiente": "dstLat",
             "pendiente": pendiente,
             "intercepto": intercepto,
             "correlacion_pearson": correlacion,
@@ -179,12 +180,13 @@ plt.plot(
     x_linea,
     y_linea,
     linewidth=2,
+    color="red",
     label=f"Regresión lineal (R² = {r2:.4f})"
 )
 
-plt.xlabel("Longitud de origen (srcLon)")
-plt.ylabel("Puerto de origen (srcPort)")
-plt.title("Modelo lineal: srcLon vs srcPort")
+plt.xlabel("Latitud de origen (srcLat)")
+plt.ylabel("Latitud de destino (dstLat)")
+plt.title("Modelo lineal: Latitud Origen vs Latitud Destino")
 plt.legend()
 plt.grid(alpha=0.3)
 
@@ -218,12 +220,13 @@ plt.scatter(
 
 plt.axhline(
     0,
+    color="red",
     linewidth=2
 )
 
 plt.xlabel("Valores predichos")
 plt.ylabel("Residuales")
-plt.title("Residuales del modelo lineal")
+plt.title("Residuales del modelo lineal (srcLat vs dstLat)")
 plt.grid(alpha=0.3)
 
 plt.tight_layout()
@@ -255,11 +258,11 @@ else:
     direccion = "nula"
 
 conclusion = (
-    f"La correlación entre srcLon y srcPort es {direccion} y "
+    f"La correlación entre srcLat y dstLat es {direccion} y "
     f"{fuerza} (r = {correlacion:.4f}). "
-    f"El modelo lineal obtiene un R^2 de {r2:.4f}, por lo que "
-    f"aproximadamente el {r2 * 100:.2f}% de la variabilidad de "
-    f"srcPort es explicada por srcLon mediante este modelo."
+    f"El modelo lineal obtiene un R^2 de {r2:.4f}, lo que indica que "
+    f"la ubicación geográfica de los atacantes no mantiene una relación lineal "
+    f"directa con la ubicación del servidor destino, evidenciando una amenaza global y distribuida."
 )
 
 print("\n" + "-" * 70)
@@ -304,7 +307,7 @@ lineas.append("-" * 70)
 lineas.append("OBJETIVO")
 lineas.append("-" * 70)
 lineas.append(
-    "Generar un modelo lineal entre srcLon y srcPort, "
+    "Generar un modelo lineal entre srcLat y dstLat, "
     "crear las gráficas correspondientes y obtener R^2."
 )
 lineas.append("")
@@ -312,11 +315,11 @@ lineas.append("")
 lineas.append("-" * 70)
 lineas.append("MODELO")
 lineas.append("-" * 70)
-lineas.append("Variable independiente: srcLon")
-lineas.append("Variable dependiente: srcPort")
+lineas.append("Variable independiente: srcLat")
+lineas.append("Variable dependiente: dstLat")
 lineas.append(
-    f"Ecuación: srcPort = {intercepto:.6f} "
-    f"+ ({pendiente:.6f} * srcLon)"
+    f"Ecuación: dstLat = {intercepto:.6f} "
+    f"+ ({pendiente:.6f} * srcLat)"
 )
 lineas.append("")
 

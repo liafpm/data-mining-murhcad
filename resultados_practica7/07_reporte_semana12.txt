@@ -1,0 +1,39 @@
+======================================================================
+REPORTE - SEMANA 12: AGRUPAMIENTO DE DATOS (K-MEANS)
+======================================================================
+
+Dataset: HoneyNetEvents_Clean.csv
+Registros analizados: 132,425
+Variables utilizadas: hour, srcLat, srcLon, dstLat, dstLon
+Número óptimo de clusters (K): 3
+
+----------------------------------------------------------------------
+OBJETIVO DE NEGOCIO Y CIBERSEGURIDAD
+----------------------------------------------------------------------
+Descubrir segmentos y patrones de comportamiento no supervisados en las peticiones recibidas por la Honeynet, identificando zonas geográficas de concentración y franjas horarias operativas de las botnets.
+
+----------------------------------------------------------------------
+PERFILAMIENTO DE CLUSTERS (VALORES PROMEDIO)
+----------------------------------------------------------------------
+  Cluster  Cantidad_Eventos      hour    srcLat     srcLon    dstLat     dstLon
+Cluster_1             53755 12.777621 36.596780  52.778086 41.280208 -69.257454
+Cluster_0             50608 11.441333 40.938967 -72.460757 12.590096  66.203411
+Cluster_2             28062  9.340496  4.136269 112.486100 13.853605  20.886554
+
+----------------------------------------------------------------------
+COMPOSICIÓN DE ATAQUES POR CLUSTER
+----------------------------------------------------------------------
+attackType  Cowrie  Dionaea  Sentrypeer
+Cluster                                
+Cluster_0    17871     1515       31222
+Cluster_1     4530    34303       14922
+Cluster_2     6468     6361       15233
+
+----------------------------------------------------------------------
+INTERPRETACIÓN DE HALLAZGOS (EJE DE PRESENTACIÓN)
+----------------------------------------------------------------------
+Mediante K-Means (K=3) identificamos tres agrupamientos clave:
+ - Cluster_0: Tráfico malicioso proveniente de las Américas/Occidente con enfoque en nodos específicos.
+ - Cluster_1: Actividad masiva procedente de Europa/Asia con alta dispersión horaria.
+ - Cluster_2: Grupo concentrado de alta intensidad horaria en regiones asiáticas/Oceanía.
+Este descubrimiento permite segmentar la infraestructura de detección y diseñar reglas de mitigación dinámicas por zonas de riesgo regional.

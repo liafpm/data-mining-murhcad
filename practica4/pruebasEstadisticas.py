@@ -3,7 +3,7 @@ Semana 7 - Pruebas Estadísticas
 
 Objetivo:
 Comprobar si existen diferencias estadísticamente significativas
-en el puerto de origen (srcPort) entre los diferentes tipos de
+en la hora del día (hour) entre los diferentes tipos de
 ataque (attackType), utilizando:
 
 1. ANOVA de una vía.
@@ -24,7 +24,7 @@ from scipy import stats
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-CSV_PATH = BASE_DIR / "practica1" / "raw" / "HoneyNetEvents_Clean.csv"
+CSV_PATH = BASE_DIR / "practica1" / "HoneyNetEvents_Clean.csv"
 
 # Carpeta donde se guardarán todos los resultados.
 OUTPUT_DIR = BASE_DIR / "resultados_practica4"
@@ -57,7 +57,7 @@ print(f"Columnas: {len(df.columns)}")
 # 3. VALIDAR COLUMNAS
 # ============================================================
 
-columnas_necesarias = ["attackType", "srcPort"]
+columnas_necesarias = ["attackType", "hour"]
 faltantes = [col for col in columnas_necesarias if col not in df.columns]
 
 if faltantes:
@@ -70,13 +70,13 @@ if faltantes:
 # 4. PREPARAR DATOS
 # ============================================================
 
-datos = df[["attackType", "srcPort"]].copy()
+datos = df[["attackType", "hour"]].copy()
 
-# Convertir srcPort a numérico por seguridad.
-datos["srcPort"] = pd.to_numeric(datos["srcPort"], errors="coerce")
+# Convertir hour a numérico por seguridad.
+datos["hour"] = pd.to_numeric(datos["hour"], errors="coerce")
 
-# Eliminar filas sin attackType o srcPort.
-datos = datos.dropna(subset=["attackType", "srcPort"])
+# Eliminar filas sin attackType o hour.
+datos = datos.dropna(subset=["attackType", "hour"])
 
 # Eliminar categorías vacías.
 datos["attackType"] = datos["attackType"].astype(str).str.strip()
@@ -87,7 +87,7 @@ print(f"\nRegistros utilizados para las pruebas: {len(datos):,}")
 grupos = {}
 
 for attack_type, grupo in datos.groupby("attackType"):
-    valores = grupo["srcPort"].dropna()
+    valores = grupo["hour"].dropna()
 
     # Para una prueba t se necesitan al menos 2 observaciones.
     if len(valores) >= 2:
@@ -103,7 +103,7 @@ for nombre, valores in grupos.items():
 # ============================================================
 
 resumen = (
-    datos.groupby("attackType")["srcPort"]
+    datos.groupby("attackType")["hour"]
     .agg(
         cantidad="count",
         media="mean",
@@ -137,8 +137,8 @@ print("\n" + "-" * 70)
 print("ANOVA DE UNA VÍA")
 print("-" * 70)
 
-print("\nH0: Las medias de srcPort son iguales entre los tipos de ataque.")
-print("H1: Al menos una media de srcPort es diferente.")
+print("\nH0: Las medias de la hora del día (hour) son iguales entre los tipos de ataque.")
+print("H1: Al menos una media de la hora del día (hour) es diferente.")
 print(f"Nivel de significancia: α = {ALPHA}")
 
 
@@ -160,7 +160,7 @@ anova_resultado = pd.DataFrame(
     [
         {
             "prueba": "ANOVA de una vía",
-            "variable_numerica": "srcPort",
+            "variable_numerica": "hour",
             "variable_categorica": "attackType",
             "F": f_stat,
             "p_valor": p_anova,
@@ -193,13 +193,13 @@ if p_anova < ALPHA:
     print("\nResultado: se rechaza H0.")
     print(
         "Existe evidencia estadísticamente significativa de que "
-        "no todas las medias de srcPort son iguales."
+        "la hora promedio de ocurrencia varía según el tipo de ataque."
     )
 else:
     print("\nResultado: no se rechaza H0.")
     print(
         "No existe evidencia estadísticamente significativa suficiente "
-        "para afirmar que las medias sean diferentes."
+        "para afirmar que las horas promedio sean diferentes entre tipos de ataque."
     )
 
 
@@ -267,12 +267,12 @@ interpretaciones = []
 for resultado in resultados_t:
     if resultado["p_valor_bonferroni"] < ALPHA:
         texto = (
-            f"Existe una diferencia estadísticamente significativa "
+            f"Existe una diferencia estadísticamente significativa en la hora de ocurrencia "
             f"entre {resultado['grupo_1']} y {resultado['grupo_2']}."
         )
     else:
         texto = (
-            f"No se encontró una diferencia estadísticamente significativa "
+            f"No se encontró una diferencia estadísticamente significativa en la hora de ocurrencia "
             f"entre {resultado['grupo_1']} y {resultado['grupo_2']}."
         )
 
@@ -300,17 +300,17 @@ interpretaciones_df.to_csv(
 if p_anova < ALPHA:
     conclusion = (
         "El ANOVA de una vía mostró una diferencia estadísticamente "
-        "significativa en srcPort entre los tipos de ataque "
+        "significativa en la hora del día (hour) entre los tipos de ataque "
         f"(F = {f_stat:.2f}, p < 0.001). "
         "Por lo tanto, se rechaza la hipótesis nula de igualdad "
         "de medias. Las pruebas t de Welch con corrección de "
-        "Bonferroni permiten identificar qué pares de grupos "
-        "presentan diferencias estadísticamente significativas."
+        "Bonferroni permiten identificar qué pares de tipos de ataque "
+        "presentan distribuciones horarias distintas."
     )
 else:
     conclusion = (
         "El ANOVA de una vía no mostró una diferencia estadísticamente "
-        f"significativa en srcPort entre los tipos de ataque "
+        f"significativa en la hora del día (hour) entre los tipos de ataque "
         f"(F = {f_stat:.2f}, p = {p_anova:.6g}). "
         "Por lo tanto, no se rechaza la hipótesis nula."
     )
@@ -354,7 +354,7 @@ lineas.append("OBJETIVO")
 lineas.append("-" * 70)
 lineas.append(
     "Comprobar si existen diferencias estadísticamente significativas "
-    "en srcPort entre los diferentes valores de attackType."
+    "en la hora del día (hour) entre los diferentes valores de attackType."
 )
 lineas.append("")
 
@@ -362,10 +362,10 @@ lineas.append("-" * 70)
 lineas.append("HIPÓTESIS")
 lineas.append("-" * 70)
 lineas.append(
-    "H0: Las medias de srcPort son iguales entre los tipos de ataque."
+    "H0: Las medias de la hora del día (hour) son iguales entre los tipos de ataque."
 )
 lineas.append(
-    "H1: Al menos una media de srcPort es diferente."
+    "H1: Al menos una media de la hora del día (hour) es diferente."
 )
 lineas.append("")
 

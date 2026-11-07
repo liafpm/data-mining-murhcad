@@ -1,119 +1,53 @@
 # ============================================================
-# ESTADÍSTICA DESCRIPTIVA - HONEYNET EVENTS
+# ESTADÍSTICA DESCRIPTIVA - HONEYNET EVENTS (SEMANA 5)
 # ============================================================
 
 from pathlib import Path
 import pandas as pd
 import matplotlib.pyplot as plt
 
+# ------------------------------------------------------------
+# 1. CONFIGURACIÓN Y RUTAS DE SALIDA
+# ------------------------------------------------------------
+BASE_DIR = Path(__file__).resolve().parent.parent
+CSV_PATH = BASE_DIR / "practica1" / "HoneyNetEvents_Clean.csv"
+OUTPUT_DIR = BASE_DIR / "resultados_practica2"
+OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
-# ============================================================
-# 1. CARGAR EL ARCHIVO CSV
-# ============================================================
+df = pd.read_csv(CSV_PATH)
 
-csv_path = Path(__file__).resolve().parent.parent / "practica1" / "raw" / "HoneyNetEvents_Clean.csv"
-df = pd.read_csv(csv_path)
+print("=" * 70)
+print("SEMANA 5 - ESTADÍSTICA DESCRIPTIVA Y ENTIDADES")
+print("=" * 70)
+print(f"Registros cargados: {len(df):,}")
 
-print("Datos cargados correctamente.")
-print("Número de filas:", len(df))
-print("Número de columnas:", len(df.columns))
-
-
-# ============================================================
-# 2. REVISAR LA INFORMACIÓN DEL DATASET
-# ============================================================
-
-print("\n========== COLUMNAS ==========")
-print(df.columns.tolist())
-
-print("\n========== TIPOS DE DATOS ==========")
-print(df.dtypes)
-
-print("\n========== VALORES FALTANTES ==========")
-print(df.isnull().sum())
-
-
-# ============================================================
-# 3. ESTADÍSTICA DESCRIPTIVA
-# ============================================================
-
-
-print("\n========== ESTADÍSTICA DESCRIPTIVA ==========")
+# ------------------------------------------------------------
+# 2. INFORMACIÓN BÁSICA Y ESTADÍSTICA DESCRIPTIVA
+# ------------------------------------------------------------
+print("\n========== RESUMEN GENERAL ==========")
 print(df.describe())
 
-
-# ============================================================
-# 4. FRECUENCIA DE LOS TIPOS DE ATAQUE
-# ============================================================
-
-print("\n========== TIPOS DE ATAQUE ==========")
-
+# ------------------------------------------------------------
+# 3. FRECUENCIA DE ATAQUES Y GRAFICADO
+# ------------------------------------------------------------
 ataques = df["attackType"].value_counts()
-
+print("\n========== FRECUENCIA POR TIPO DE ATAQUE ==========")
 print(ataques)
 
-
-# GRÁFICA DE BARRAS
-ataques.plot(kind="bar")
-
+plt.figure(figsize=(8, 5))
+ataques.plot(kind="bar", color="skyblue", edgecolor="black")
 plt.title("Cantidad de eventos por tipo de ataque")
 plt.xlabel("Tipo de ataque")
 plt.ylabel("Cantidad de eventos")
 plt.xticks(rotation=0)
-
+plt.grid(axis="y", linestyle="--", alpha=0.7)
 plt.tight_layout()
-plt.show()
+plt.savefig(OUTPUT_DIR / "01_eventos_por_tipo_ataque.png", dpi=150)
+plt.close()
 
-
-# ============================================================
-# 5. IDENTIFICAR ENTIDADES Y RELACIONES
-# ============================================================
-
-# En este dataset podemos identificar principalmente:
-
-# ENTIDAD 1 = ORIGEN
-# srcIp = IP que genera el evento
-
-# ENTIDAD 2 = DESTINO
-# dstIp = IP que recibe el evento
-
-# ENTIDAD 3 = EVENTO
-# attackType = tipo de ataque
-
-# La relación sería:
-#
-# ORIGEN ----> EVENTO ----> DESTINO
-#
-# Por ejemplo:
-# una IP de origen realiza un ataque
-# contra una IP de destino.
-
-
-print("\n========== ENTIDADES ==========")
-
-print("Entidad ORIGEN:")
-print("- srcIp")
-print("- srcCountryName")
-print("- srcOrg")
-
-print("\nEntidad EVENTO:")
-print("- attackType")
-print("- protocol")
-print("- timestamp")
-
-print("\nEntidad DESTINO:")
-print("- dstIp")
-print("- dstPort")
-print("- dstHostname")
-
-
-# ============================================================
-# 6. MOSTRAR LAS RELACIONES MÁS FRECUENTES
-# ============================================================
-
-# Agrupamos IP de origen, IP de destino y tipo de ataque.
-# Esto nos dice qué combinaciones aparecen más veces.
-
+# ------------------------------------------------------------
+# 4. ENTIDADES Y RELACIONES MÁS FRECUENTES
+# ------------------------------------------------------------
 relaciones = (
     df.groupby(["srcIp", "dstIp", "attackType"])
     .size()
@@ -121,155 +55,66 @@ relaciones = (
     .sort_values("cantidad", ascending=False)
 )
 
-print("\n========== RELACIONES MÁS FRECUENTES ==========")
-print(relaciones.head(10))
+print("\n========== RELACIONES MÁS FRECUENTES (TOP 10) ==========")
+print(relaciones.head(10).to_string(index=False))
 
-
-# ============================================================
-# 7. DIAGRAMA DE RELACIONES
-# ============================================================
-
-# 10 relaciones más frecuentes
+# Diagrama visual de las 10 relaciones principales
 top_relaciones = relaciones.head(10)
-
-plt.figure(figsize=(16, 10))
+plt.figure(figsize=(14, 8))
 
 for posicion, (_, fila) in enumerate(top_relaciones.iterrows()):
-
     origen = fila["srcIp"]
     destino = fila["dstIp"]
     cantidad = fila["cantidad"]
-
     y = len(top_relaciones) - posicion
 
-    # ORIGEN ----------> DESTINO
     plt.annotate(
         "",
         xy=(1, y),
         xytext=(0, y),
-        arrowprops=dict(arrowstyle="->", linewidth=1.5)
+        arrowprops=dict(arrowstyle="->", linewidth=1.5, color="navy")
     )
-
-    # IP de origen
-    plt.text(
-        -0.05,
-        y,
-        origen,
-        ha="right",
-        va="center",
-        fontsize=10
-    )
-
-    # IP de destino
-    plt.text(
-        1.05,
-        y,
-        destino,
-        ha="left",
-        va="center",
-        fontsize=10
-    )
-
-    # Cuántos eventos existen
-    plt.text(
-        0.5,
-        y + 0.15,
-        f"{cantidad:,} eventos",
-        ha="center",
-        va="bottom",
-        fontsize=9
-    )
+    plt.text(-0.05, y, origen, ha="right", va="center", fontsize=10, weight="bold")
+    plt.text(1.05, y, destino, ha="left", va="center", fontsize=10, weight="bold")
+    plt.text(0.5, y + 0.15, f"{cantidad:,} eventos ({fila['attackType']})", ha="center", va="bottom", fontsize=9)
 
 plt.xlim(-0.8, 1.8)
 plt.ylim(0, len(top_relaciones) + 1)
-
 plt.yticks([])
+plt.xticks([0, 1], ["ORIGEN (srcIp)", "DESTINO (dstIp)"], fontsize=12, weight="bold")
+plt.title("Diagrama de las 10 relaciones de flujo más frecuentes", fontsize=14)
+plt.tight_layout()
+plt.savefig(OUTPUT_DIR / "02_diagrama_relaciones_top10.png", dpi=150)
+plt.close()
 
-plt.xticks(
-    [0, 1],
-    ["ORIGEN (srcIp)", "DESTINO (dstIp)"]
-)
-
-plt.title(
-    "Diagrama de las 10 relaciones más frecuentes",
-    fontsize=16
-)
-plt.subplots_adjust(
-    left=0.25,
-    right=0.75,
-    top=0.90,
-    bottom=0.10
-)
-
-plt.show()
-
-# ============================================================
-# 8. MÉTRICAS DE DATOS AGRUPADOS
-# ============================================================
-
-# Aquí agrupamos los datos por tipo de ataque.
-
-# Calculamos:
-# - cantidad de registros
-# - promedio del puerto de origen
-# - mediana
-# - desviación estándar
-# - mínimo
-# - máximo
-
+# ------------------------------------------------------------
+# 5. MÉTRICAS DE DATOS AGRUPADOS POR ATAQUE Y HORA
+# ------------------------------------------------------------
 metricas = (
     df.groupby("attackType")
     .agg(
         cantidad=("attackType", "count"),
-        promedio_srcPort=("srcPort", "mean"),
-        mediana_srcPort=("srcPort", "median"),
-        desviacion_srcPort=("srcPort", "std"),
-        minimo_srcPort=("srcPort", "min"),
-        maximo_srcPort=("srcPort", "max")
+        promedio_hora=("hour", "mean"),
+        mediana_hora=("hour", "median"),
+        desviacion_hora=("hour", "std"),
+        minimo_hora=("hour", "min"),
+        maximo_hora=("hour", "max")
     )
 )
 
 print("\n========== MÉTRICAS AGRUPADAS POR TIPO DE ATAQUE ==========")
 print(metricas)
-
-
-# ============================================================
-# 9. MÉTRICAS AGRUPADAS POR HORA
-# ============================================================
-
-# También podemos saber cuántos eventos ocurren
-# durante cada hora del día.
+metricas.to_csv(OUTPUT_DIR / "metricas_ataques.csv")
 
 eventos_hora = df.groupby("hour").size()
-
-print("\n========== EVENTOS POR HORA ==========")
-print(eventos_hora)
-
-
-# GRÁFICA
-eventos_hora.plot(kind="bar", figsize=(10, 5))
-
-plt.title("Cantidad de eventos por hora")
-plt.xlabel("Hora")
+plt.figure(figsize=(10, 5))
+eventos_hora.plot(kind="bar", color="teal", edgecolor="black")
+plt.title("Cantidad de eventos por hora del día")
+plt.xlabel("Hora (0-23)")
 plt.ylabel("Cantidad de eventos")
-
+plt.grid(axis="y", linestyle="--", alpha=0.7)
 plt.tight_layout()
-plt.show()
+plt.savefig(OUTPUT_DIR / "03_eventos_por_hora.png", dpi=150)
+plt.close()
 
-
-# ============================================================
-# 10. GUARDAR LAS MÉTRICAS EN UN CSV
-# ============================================================
-
-output_dir = Path(__file__).resolve().parent.parent / "resultados_practica2"
-output_dir.mkdir(parents=True, exist_ok=True)
-metricas.to_csv(output_dir / "metricas_ataques.csv")
-
-print(f"\nArchivo '{output_dir / 'metricas_ataques.csv'}' creado correctamente.")
-
-
-# ============================================================
-# FIN
-# ============================================================
-
-print("\n========== ANÁLISIS TERMINADO ==========")
+print(f"\nProceso completado. Todos los gráficos e informes se guardaron en:\n{OUTPUT_DIR}")

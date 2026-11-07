@@ -1,0 +1,46 @@
+======================================================================
+REPORTE - SEMANA 10: CLASIFICACIÓN DE DATOS CON KNN
+======================================================================
+
+Dataset: HoneyNetEvents_Clean.csv
+Registros analizados: 132,425
+Variables predictoras (Features): hour, day, srcLat, srcLon, dstLat, dstLon
+Variable objetivo (Target): attackType
+Parámetro óptimo K: 5
+
+----------------------------------------------------------------------
+OBJETIVO DE NEGOCIO Y CIBERSEGURIDAD
+----------------------------------------------------------------------
+Clasificar automáticamente el vector de ataque registrado en la Honeynet mediante el algoritmo K-Nearest Neighbors (KNN), utilizando la huella geográfica (latitud/longitud) y patrones temporales de ocurrencia.
+
+----------------------------------------------------------------------
+MÉTRICAS DE RENDIMIENTO GLOBAL
+----------------------------------------------------------------------
+Exactitud General (Accuracy): 97.50%
+
+----------------------------------------------------------------------
+REPORTE DE CLASIFICACIÓN DETALLADO
+----------------------------------------------------------------------
+              precision    recall  f1-score   support
+
+      Cowrie       0.97      0.93      0.95      8661
+     Dionaea       0.98      0.98      0.98     12654
+  Sentrypeer       0.97      1.00      0.99     18413
+
+    accuracy                           0.98     39728
+   macro avg       0.97      0.97      0.97     39728
+weighted avg       0.97      0.98      0.97     39728
+
+
+----------------------------------------------------------------------
+MATRIZ DE CONFUSIÓN
+----------------------------------------------------------------------
+            Cowrie  Dionaea  Sentrypeer
+Cowrie        8032      229         400
+Dionaea        215    12355          84
+Sentrypeer      34       30       18349
+
+----------------------------------------------------------------------
+INTERPRETACIÓN DE HALLAZGOS (EJE DE PRESENTACIÓN)
+----------------------------------------------------------------------
+El modelo KNN alcanzó una exactitud del 97.5%, demostrando que la huella geográfica combinada con la franja horaria permite perfilar y clasificar con alta precisión si un evento entrante corresponde a escaneo VoIP (Sentrypeer), ataques SSH/Telnet (Cowrie) o exploits de red (Dionaea).

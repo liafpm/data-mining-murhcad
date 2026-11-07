@@ -9,23 +9,23 @@ Registros analizados: 132,425
 ----------------------------------------------------------------------
 OBJETIVO
 ----------------------------------------------------------------------
-Generar un modelo lineal entre srcLon y srcPort, crear las gráficas correspondientes y obtener R^2.
+Generar un modelo lineal entre srcLat y dstLat, crear las gráficas correspondientes y obtener R^2.
 
 ----------------------------------------------------------------------
 MODELO
 ----------------------------------------------------------------------
-Variable independiente: srcLon
-Variable dependiente: srcPort
-Ecuación: srcPort = 48901.890900 + (-45.397238 * srcLon)
+Variable independiente: srcLat
+Variable dependiente: dstLat
+Ecuación: dstLat = 22.431197 + (0.066059 * srcLat)
 
 ----------------------------------------------------------------------
 RESULTADOS
 ----------------------------------------------------------------------
-Correlación de Pearson (r): -0.257065
-R^2: 0.066082
-p-valor: 0
+Correlación de Pearson (r): 0.058905
+R^2: 0.003470
+p-valor: 4.17706e-102
 
 ----------------------------------------------------------------------
 CONCLUSIÓN
 ----------------------------------------------------------------------
-La correlación entre srcLon y srcPort es negativa y débil (r = -0.2571). El modelo lineal obtiene un R^2 de 0.0661, por lo que aproximadamente el 6.61% de la variabilidad de srcPort es explicada por srcLon mediante este modelo.
+La correlación entre srcLat y dstLat es positiva y débil (r = 0.0589). El modelo lineal obtiene un R^2 de 0.0035, lo que indica que la ubicación geográfica de los atacantes no mantiene una relación lineal directa con la ubicación del servidor destino, evidenciando una amenaza global y distribuida.

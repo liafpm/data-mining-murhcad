@@ -1,2 +1,2 @@
 ﻿prueba,variable_numerica,variable_categorica,F,p_valor,alpha,decision,resultado
-ANOVA de una vía,srcPort,attackType,6587.787868079598,0.0,0.05,Rechazar H0,Diferencia estadísticamente significativa
+ANOVA de una vía,hour,attackType,110.43428588893688,1.1993668206089106e-48,0.05,Rechazar H0,Diferencia estadísticamente significativa

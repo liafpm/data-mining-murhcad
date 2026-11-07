@@ -1,0 +1,47 @@
+======================================================================
+REPORTE - SEMANA 14: ANÁLISIS DE TEXTO Y NUBE DE PALABRAS
+======================================================================
+
+Dataset: HoneyNetEvents_Clean.csv
+Registros analizados: 132,425
+Campos textuales procesados: srcOrg, srcCountryName, protocol, dstHostname
+
+----------------------------------------------------------------------
+OBJETIVO DE NEGOCIO Y CIBERSEGURIDAD
+----------------------------------------------------------------------
+Analizar el contenido de texto no estructurado y categórico de los logs para identificar los principales proveedores de infraestructura (ISPs/Organizaciones) utilizados por los atacantes para desplegar tráfico malicioso.
+
+----------------------------------------------------------------------
+TOP 10 ORGANIZACIONES / ISPs CON MAYOR ACTIVIDAD MALICIOSA
+----------------------------------------------------------------------
+                           Organizacion_ISP  Frecuencia
+                                VDI-NETWORK       18561
+                                    OVH SAS       17046
+Tianfeng (Hong Kong) Communications Limited       14228
+     GERRYS INFORMATION TECHNOLOGY PVT LTD.       11057
+                           ORACLE-BMC-31898        9913
+                               RELIABLESITE        7464
+         Iran Telecommunication Company PJS        6306
+                           DIGITALOCEAN-ASN        5182
+                                   Chinanet        4203
+                     Aeza International Ltd        3824
+
+----------------------------------------------------------------------
+TOP 10 PAÍSES DE ORIGEN
+----------------------------------------------------------------------
+    Pais_Origen  Frecuencia
+  United States       41015
+         France       16135
+       Pakistan       11148
+      Hong Kong       10805
+      Singapore       10310
+          China        7886
+           Iran        6329
+         Sweden        3843
+The Netherlands        3778
+      Australia        3690
+
+----------------------------------------------------------------------
+INTERPRETACIÓN DE HALLAZGOS (EJE DE PRESENTACIÓN)
+----------------------------------------------------------------------
+El análisis exploratorio de texto y la Nube de Palabras revelan una alta concentración de eventos en proveedores de hosting y telecomunicaciones específicos (como VDI-NETWORK, OVH SAS y Tianfeng HK). Visualizar la prominencia de estos términos ayuda al equipo de ciberseguridad a identificar ASN/ISPs sospechosos y solicitar bloqueos preventivos de rangos de IP.

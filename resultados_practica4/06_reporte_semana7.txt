@@ -10,34 +10,34 @@ Nivel de significancia: α = 0.05
 ----------------------------------------------------------------------
 OBJETIVO
 ----------------------------------------------------------------------
-Comprobar si existen diferencias estadísticamente significativas en srcPort entre los diferentes valores de attackType.
+Comprobar si existen diferencias estadísticamente significativas en la hora del día (hour) entre los diferentes valores de attackType.
 
 ----------------------------------------------------------------------
 HIPÓTESIS
 ----------------------------------------------------------------------
-H0: Las medias de srcPort son iguales entre los tipos de ataque.
-H1: Al menos una media de srcPort es diferente.
+H0: Las medias de la hora del día (hour) son iguales entre los tipos de ataque.
+H1: Al menos una media de la hora del día (hour) es diferente.
 
 ----------------------------------------------------------------------
 ANOVA DE UNA VÍA
 ----------------------------------------------------------------------
-F = 6587.787868
-p = 0
+F = 110.434286
+p = 1.199366821e-48
 Decisión: Rechazar H0
 
-El ANOVA de una vía mostró una diferencia estadísticamente significativa en srcPort entre los tipos de ataque (F = 6587.79, p < 0.001). Por lo tanto, se rechaza la hipótesis nula de igualdad de medias. Las pruebas t de Welch con corrección de Bonferroni permiten identificar qué pares de grupos presentan diferencias estadísticamente significativas.
+El ANOVA de una vía mostró una diferencia estadísticamente significativa en la hora del día (hour) entre los tipos de ataque (F = 110.43, p < 0.001). Por lo tanto, se rechaza la hipótesis nula de igualdad de medias. Las pruebas t de Welch con corrección de Bonferroni permiten identificar qué pares de tipos de ataque presentan distribuciones horarias distintas.
 
 ----------------------------------------------------------------------
 PRUEBAS T DE WELCH + BONFERRONI
 ----------------------------------------------------------------------
-Cowrie vs Dionaea: t = 39.615385, p original = 0, p Bonferroni = 0, significativo = Sí
-Cowrie vs Sentrypeer: t = -86.848121, p original = 0, p Bonferroni = 0, significativo = Sí
-Dionaea vs Sentrypeer: t = -94.044878, p original = 0, p Bonferroni = 0, significativo = Sí
+Cowrie vs Dionaea: t = -13.736470, p original = 6.998116835e-43, p Bonferroni = 2.099435051e-42, significativo = Sí
+Cowrie vs Sentrypeer: t = -3.258474, p original = 0.001120710744, p Bonferroni = 0.003362132232, significativo = Sí
+Dionaea vs Sentrypeer: t = 11.991887, p original = 4.160269061e-33, p Bonferroni = 1.248080718e-32, significativo = Sí
 
 ----------------------------------------------------------------------
 RESUMEN DESCRIPTIVO
 ----------------------------------------------------------------------
-attackType  cantidad        media  mediana  desviacion_estandar  minimo  maximo
-    Cowrie     28869 46814.507673  47056.0          8794.442807       0   65522
-   Dionaea     42179 42297.155765  51311.0         20867.401256       1   65535
-Sentrypeer     61377 52701.712026  54845.0         10844.418189       0   65534
+attackType  cantidad     media  mediana  desviacion_estandar  minimo  maximo
+    Cowrie     28869 11.236794     11.0             6.315883       0      23
+   Dionaea     42179 11.959767      9.0             7.652310       0      23
+Sentrypeer     61377 11.391091     11.0             7.267385       0      23
